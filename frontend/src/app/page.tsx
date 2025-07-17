@@ -1,10 +1,11 @@
-import Image from "next/image";
+import Homepage from "@/app/homepage/Homepage";
+import About from "@/app/homepage/About";
 
 export default function Home() {
   return (
-      <div className="p-6">
-        <h1 className="text-3xl font-bold mb-4">Welcome to NBA Stats</h1>
-        <p>This site visualizes NBA player and team statistics.</p>
-      </div>
+      <>
+          <Homepage></Homepage>
+          <About></About>
+      </>
   );
 }
