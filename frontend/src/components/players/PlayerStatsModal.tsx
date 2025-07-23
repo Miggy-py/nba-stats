@@ -1,63 +1,73 @@
-import React from 'react'
-import { Player } from '@/types/PlayerInterface'
+// src/components/players/PlayerStatsModal.tsx
+import React from 'react';
+import { Player } from '@/types/PlayerInterface';
+import { usePlayerStats } from '@/hooks/usePlayerStats';
 
 interface PlayerStatsModalProps {
-    player: Player
-    onClose: () => void
+  player: Player;
+  onClose: () => void;
 }
 
 export const PlayerStatsModal: React.FC<PlayerStatsModalProps> = ({ player, onClose }) => {
-    const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        if (event.target === event.currentTarget) {
-            onClose()
-        }
-    }
+  const {
+    data,
+    isLoading,
+    isError,
+    error
+  } = usePlayerStats(player.full_name);
 
-    return (
-        <div
-            className="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center p-4"
-            onClick={handleOverlayClick}
-        >
-            <div className="bg-white rounded-lg max-w-2xl w-full p-6 shadow-xl">
-                <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-2xl font-bold">{player.name}</h2>
-                    <button
-                        onClick={onClose}
-                        className="text-gray-500 hover:text-gray-700"
-                    >
-                        ✕
-                    </button>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div>
-                        <h3 className="font-semibold mb-2">Current Stats</h3>
-                        <p>Points: {player.stats.points}</p>
-                        <p>Assists: {player.stats.assists}</p>
-                        <p>Rebounds: {player.stats.rebounds}</p>
-                    </div>
-
-                    <div>
-                        <h3 className="font-semibold mb-2">Player Info</h3>
-                        <p>Team: {player.team}</p>
-                        <p>Position: {player.position}</p>
-                        <p>Age: {player.age}</p>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 className="font-semibold mb-2">Career History</h3>
-                    <div className="space-y-2">
-                        {player.history.map((season, index) => (
-                            <div key={index} className="flex justify-between border-b pb-2">
-                                <span>{season.season}</span>
-                                <span>{season.team}</span>
-                                <span>{season.gamesPlayed} games</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      <div className="bg-white p-6 rounded-lg max-w-2xl w-full mx-4">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-bold">{player.full_name}</h2>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700"
+          >
+            ×
+          </button>
         </div>
-    )
-}
+
+        {isLoading ? (
+          <div className="text-center py-4">Loading...</div>
+        ) : isError ? (
+          <div className="text-red-500 text-center py-4">
+            Error: {error?.message || 'Failed to load stats'}
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {data?.stats && (
+              <>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <h3 className="font-semibold">Team</h3>
+                    <p>{data.stats.team}</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Position</h3>
+                    <p>{data.stats.position}</p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-4">
+                  <div>
+                    <h3 className="font-semibold">Points</h3>
+                    <p>{data.stats.points}</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Assists</h3>
+                    <p>{data.stats.assists}</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Rebounds</h3>
+                    <p>{data.stats.rebounds}</p>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};

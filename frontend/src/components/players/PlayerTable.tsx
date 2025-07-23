@@ -26,7 +26,7 @@ export const PlayerTable: React.FC<PlayerTableProps> = ({ players, onSelectPlaye
                                     onClick={() => onSelectPlayer(player)}
                                     className="text-blue-600 hover:text-blue-800 hover:underline"
                                 >
-                                    {player.name}
+                                    {player.full_name}
                                 </button>
                             </td>
                             <td className="px-6 py-4">{player.team}</td>

@@ -13,17 +13,14 @@ def main():
 
 
 def compare_players_over_time(player_list: List[str], y_axis: str = "PTS") -> None:
-    # Check for empty list
     if len(player_list) < 1:
         return None
 
     players: List[Player] = []
 
-    # Get a list of Player objects made from their name
     for name in player_list:
         players.append(Player(name))
 
-    # Get one dataframe containing all requested players data
     combined_df = _get_combined_data_frames(players)
 
     # Create a new column Year based off of season_id
@@ -39,13 +36,15 @@ def compare_players_over_time(player_list: List[str], y_axis: str = "PTS") -> No
         title=f"{y_axis} per Season: {' vs '.join(player_list)}"
     )
 
-    # Make the figure show every year with a tick of 1, and give a title
+    # Make the figure show every year with a tick of 1 and give a title
     fig.update_layout(
         xaxis=dict(tickmode="linear", dtick=1),
         yaxis_title="Total Points",
     )
 
     fig.show()
+
+    return None
 
 
 # Helper function to get all data frames into one pd.DataFrame
