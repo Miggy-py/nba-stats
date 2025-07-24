@@ -1,48 +1,54 @@
 'use client'
 import React, { useState } from 'react'
 import { Player } from '@/types/PlayerInterface'
-import { PlayerTable } from '@/components/players/PlayerTable'
-import { PlayerStatsModal } from '@/components/players/PlayerStatsModal'
+import { columns } from "./columns"
+import { DataTable } from "./data-table"
 
 
-// Placeholder data will be replaced with actual data later
-const mockPlayers: Player[] = [
-    {
-        id: '1',
-        name: 'John Doe',
-        team: 'Team A',
-        position: 'Forward',
-        age: 25,
-        stats: {
-            points: 20.5,
-            assists: 5.2,
-            rebounds: 6.8
+async function getData(): Promise<Player[]> {
+    // Fetch data from your API here.
+    return [
+        {
+            id: "1",
+            name: 'John Doe',
+            TEAM_ID: "Lakers",
+            PLAYER_AGE: 28,
+            SEASON_ID: '',
+            LEAGUE_ID: '',
+            TEAM_ABBREVIATION: '',
+            GP: 0,
+            GS: 0,
+            MIN: 0,
+            FGM: 0,
+            FGA: 0,
+            FG_PCT: 0,
+            FG3M: 0,
+            FG3A: 0,
+            FG3_PCT: 0,
+            FTM: 0,
+            FTA: 0,
+            FT_PCT: 0,
+            OREB: 0,
+            DREB: 0,
+            REB: 0,
+            AST: 0,
+            STL: 0,
+            BLK: 0,
+            TOV: 0,
+            PF: 0,
+            PTS: 0
         },
-        history: [
-            { season: '2024-25', team: 'Team A', gamesPlayed: 82 },
-            { season: '2023-24', team: 'Team B', gamesPlayed: 78 }
-        ]
-    },
-]
+        // ...
+    ]
+}
 
-export default function PlayersPage() {
-    const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null)
+
+export default async function DemoPage() {
+    const data = await getData()
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-6">Players</h1>
-
-            <PlayerTable
-                players={mockPlayers}
-                onSelectPlayer={setSelectedPlayer}
-            />
-
-            {selectedPlayer && (
-                <PlayerStatsModal
-                    player={selectedPlayer}
-                    onClose={() => setSelectedPlayer(null)}
-                />
-            )}
+        <div className="container mx-auto py-10">
+            <DataTable columns={columns} data={data} />
         </div>
     )
 }

@@ -50,8 +50,8 @@ export const PlayerStatsModal: React.FC<PlayerStatsModalProps> = ({ player, onCl
                     <div className="space-y-2">
                         {player.history.map((season, index) => (
                             <div key={index} className="flex justify-between border-b pb-2">
-                                <span>{season.season}</span>
-                                <span>{season.team}</span>
+                                <span>{season.SEASON_ID}</span>
+                                <span>{season.TEAM_ABBREVIATION}</span>
                                 <span>{season.gamesPlayed} games</span>
                             </div>
                         ))}
