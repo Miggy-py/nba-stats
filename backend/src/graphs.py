@@ -1,5 +1,7 @@
 import plotly.express as px
 import pandas as pd
+from plotly.graph_objs import Figure
+
 from player_util import start_player_csv
 from player import Player
 from stats import get_player_stats
@@ -9,27 +11,25 @@ from typing import List
 def main():
     start_player_csv()
 
+    pd.set_option('display.max_rows', None)
+    pd.set_option('display.max_columns', None)
+
     compare_players_over_time(["LeBron James", "Anthony Davis", "Stephen Curry"], "BLK")
 
 
-def compare_players_over_time(player_list: List[str], y_axis: str = "PTS") -> None:
-    # Check for empty list
+def compare_players_over_time(player_list: List[str], y_axis: str = "PTS") -> Figure | None:
     if len(player_list) < 1:
         return None
 
     players: List[Player] = []
 
-    # Get a list of Player objects made from their name
     for name in player_list:
         players.append(Player(name))
 
-    # Get one dataframe containing all requested players data
     combined_df = _get_combined_data_frames(players)
 
-    # Create a new column Year based off of season_id
     combined_df["YEAR"] = combined_df["SEASON_ID"].str[:4].astype(int)
 
-    # Make the figure using the combined dif, x as the year column and y as the column we want to compare
     fig = px.line(
         combined_df,
         x="YEAR",
@@ -45,7 +45,7 @@ def compare_players_over_time(player_list: List[str], y_axis: str = "PTS") -> No
         yaxis_title="Total Points",
     )
 
-    fig.show()
+    return fig
 
 
 # Helper function to get all data frames into one pd.DataFrame

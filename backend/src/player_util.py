@@ -17,3 +17,11 @@ def start_player_csv() -> None:
     data_frame = pandas.DataFrame(player_list)
 
     data_frame.to_csv(PLAYERS_CSV, index=False)
+
+
+def get_player_dataframe():
+    player_list = players.get_players()
+
+    data_frame = pandas.DataFrame(player_list)
+
+    return data_frame
