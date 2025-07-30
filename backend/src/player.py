@@ -1,6 +1,5 @@
 import pandas
-from player_util import PLAYERS_CSV
-from typing import Tuple
+import os
 
 class Player:
     def __init__(self, inputted_name: str):
@@ -28,7 +27,8 @@ class Player:
 
 
     def _get_player_info(self, inputted_name) -> tuple[str, int]:
-        df = pandas.read_csv(PLAYERS_CSV)
+        print(os.getcwd())
+        df = pandas.read_csv("../flaskr/players.csv")
 
         match = df[df["full_name"].str.lower() == inputted_name.lower()]
 

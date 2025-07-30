@@ -45,7 +45,7 @@ def compare_players_over_time(player_list: List[str], y_axis: str = "PTS") -> Fi
         yaxis_title="Total Points",
     )
 
-    return fig
+    fig.show()
 
 
 # Helper function to get all data frames into one pd.DataFrame

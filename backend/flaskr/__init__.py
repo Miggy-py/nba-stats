@@ -2,7 +2,8 @@ import os
 from flask import Flask, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
-from backend.src import player_util
+from backend.src import player_util, stats
+from backend.src.player import Player
 
 
 dotenv = load_dotenv()
@@ -11,12 +12,21 @@ CORS(app, resources={r'/*': {'origins': os.getenv('FRONTEND_HOST')}})
 
 
 @app.route('/', methods=['GET'])
-def player_dataframe():
+def players_dataframe():
     df = player_util.get_player_dataframe()
 
     df_as_dict = df.to_dict(orient='records')
 
     return jsonify(df_as_dict)
+
+
+@app.route('/player', methods=['GET'])
+def player_stats():
+    our_player = Player("Anthony Davis")
+
+    players_stats = stats.get_player_stats(our_player) # DF
+
+    return jsonify(players_stats.to_dict(orient='records'))
 
 
 if __name__ == '__main__':
