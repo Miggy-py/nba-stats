@@ -1,50 +1,24 @@
-'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import { Player } from '@/types/PlayerInterface'
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
 
 
 async function getData(): Promise<Player[]> {
-    // Fetch data from your API here.
-    return [
-        {
-            id: "1",
-            name: 'John Doe',
-            TEAM_ID: "Lakers",
-            PLAYER_AGE: 28,
-            SEASON_ID: '',
-            LEAGUE_ID: '',
-            TEAM_ABBREVIATION: '',
-            GP: 0,
-            GS: 0,
-            MIN: 0,
-            FGM: 0,
-            FGA: 0,
-            FG_PCT: 0,
-            FG3M: 0,
-            FG3A: 0,
-            FG3_PCT: 0,
-            FTM: 0,
-            FTA: 0,
-            FT_PCT: 0,
-            OREB: 0,
-            DREB: 0,
-            REB: 0,
-            AST: 0,
-            STL: 0,
-            BLK: 0,
-            TOV: 0,
-            PF: 0,
-            PTS: 0
-        },
-        // ...
-    ]
+    try {
+        const response = await fetch('http://localhost:5001/api/player')
+        const data = await response.json()
+        console.log(data)
+        return data as Player[]
+    } catch (error) {
+        console.error("Couldn't fetch data from Flask backend: ", error)
+        return []
+    }
 }
 
 
-export default async function DemoPage() {
-    const data = await getData()
+export default async function PlayersPage() {
+    const data = await getData() // DO NOT USE 'USE CLIENT' WITH AWAIT GET DATA
 
     return (
         <div className="container mx-auto py-10">

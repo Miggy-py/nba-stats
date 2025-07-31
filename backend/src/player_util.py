@@ -20,8 +20,6 @@ def start_player_csv() -> None:
 
 
 def get_player_dataframe():
-    player_list = players.get_players()
-
-    data_frame = pandas.DataFrame(player_list)
+    data_frame = pandas.read_csv(PLAYERS_CSV)
 
     return data_frame

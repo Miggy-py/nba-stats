@@ -6,6 +6,7 @@ from backend.src import player_util, stats
 from backend.src.player import Player
 
 
+player_util.start_player_csv()
 dotenv = load_dotenv()
 app = Flask(__name__, instance_relative_config=True)
 CORS(app, resources={r'/*': {'origins': os.getenv('FRONTEND_HOST')}})
@@ -20,7 +21,7 @@ def players_dataframe():
     return jsonify(df_as_dict)
 
 
-@app.route('/player', methods=['GET'])
+@app.route('/api/player', methods=['GET'])
 def player_stats():
     our_player = Player("Anthony Davis")
 
