@@ -25,7 +25,7 @@ def players_dataframe():
 def player_stats():
     our_player = Player("Anthony Davis")
 
-    players_stats = stats.get_player_stats(our_player) # DF
+    players_stats = stats.get_common_stats(our_player) # DF
 
     return jsonify(players_stats.to_dict(orient='records'))
 
