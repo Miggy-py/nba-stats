@@ -22,11 +22,25 @@ export const columns: ColumnDef<Player>[] = [
     },
     {
         accessorKey: 'TEAM_NAME',
-        header: 'Team'
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Team
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
     },
     {
-        accessorKey: 'PLAYER_AGE',
-        header: 'Age'
+        accessorKey: 'FROM_YEAR',
+        header: 'From'
+    },
+    {
+        accessorKey: 'TO_YEAR',
+        header: 'To'
     },
     {
         accessorKey: 'COUNTRY',

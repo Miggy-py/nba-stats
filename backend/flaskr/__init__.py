@@ -7,6 +7,7 @@ from backend.src.player import Player
 
 
 player_util.start_player_csv()
+player_util.start_common_stats_csv()
 dotenv = load_dotenv()
 app = Flask(__name__, instance_relative_config=True)
 CORS(app, resources={r'/*': {'origins': os.getenv('FRONTEND_HOST')}})
@@ -28,6 +29,13 @@ def player_stats():
     players_stats = stats.get_common_stats(our_player) # DF
 
     return jsonify(players_stats.to_dict(orient='records'))
+
+
+@app.route('/api/common', methods=['GET'])
+def common_stats():
+    common = player_util.get_common_stats_dataframe()
+
+    return jsonify(common.to_dict(orient='records'))
 
 
 if __name__ == '__main__':

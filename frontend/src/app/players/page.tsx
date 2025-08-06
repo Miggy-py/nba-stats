@@ -6,9 +6,8 @@ import { DataTable } from "./data-table"
 
 async function getData(): Promise<Player[]> {
     try {
-        const response = await fetch('http://localhost:5001/api/player')
+        const response = await fetch('http://localhost:5001/api/common')
         const data = await response.json()
-        console.log(data)
         return data as Player[]
     } catch (error) {
         console.error("Couldn't fetch data from Flask backend: ", error)
